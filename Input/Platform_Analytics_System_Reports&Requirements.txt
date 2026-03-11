@@ -1,8 +1,8 @@
-Zoom Platform Analytics System - Reports & Requirements 
+Platform Analytics System - Reports & Requirements 
 
-Zoom, as a video communications company, deals with vast amounts of data related to user activity, meetings, and platform performance. This data is critical for making business decisions, from improving service reliability to identifying popular features. 
+as a video communications company, deals with vast amounts of data related to user activity, meetings, and platform performance. This data is critical for making business decisions, from improving service reliability to identifying popular features. 
 
-This document outlines the official reporting requirements for the Zoom Platform Analytics System based on the current database structure. These requirements will guide the development of analytical dashboards to support daily decision-making processes. 
+This document outlines the official reporting requirements for the  Platform Analytics System based on the current database structure. These requirements will guide the development of analytical dashboards to support daily decision-making processes. 
 
 Shape 
 
