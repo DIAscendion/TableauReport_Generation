@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <workbook original-version='18.1' source-build='2023.3.0 (20233.23.1017.0948)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
 
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 1: FEATURE FLAGS — keep exactly as-is for all workbooks   -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <document-format-change-manifest>
     <_.fcp.AccessibleZoneTabOrder.true...AccessibleZoneTabOrder />
     <_.fcp.AnimationOnByDefault.true...AnimationOnByDefault />
@@ -14,16 +17,24 @@
     <WindowsPersistSimpleIdentifiers />
   </document-format-change-manifest>
 
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 2: PREFERENCES — keep exactly as-is for all workbooks     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <preferences>
     <preference name='ui.encoding.shelf.height' value='24' />
     <preference name='ui.shelf.height' value='26' />
   </preferences>
 
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 3: DATASOURCE                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <datasources>
-    <datasource caption='Service_Reliability_Support_Data' inline='true' name='federated.0A1B2C3D4E5F6789' version='18.1'>
+    <datasource caption='Service_Reliability_Support_DS' inline='true' name='federated.1A2B3C4D' version='18.1'>
       <connection class='federated'>
+
+        <!-- ── 3a. NAMED CONNECTIONS ────────────────────────────────── -->
         <named-connections>
-          <named-connection caption='Service_Reliability_Support_Data' name='excel-direct.0A1B2C3D4E5F6789'>
+          <named-connection caption='Service_Reliability_Support_Data' name='excel-direct.1E2F3A4B'>
             <connection class='excel-direct'
                         cleaning='no' compat='no' dataRefreshTime=''
                         filename='Service_Reliability_Support_Data.xlsx'
@@ -31,13 +42,15 @@
           </named-connection>
         </named-connections>
 
+        <!-- ── 3b. TABLE RELATIONS ──────────────────────────────────── -->
         <_.fcp.ObjectModelEncapsulateLegacy.true...relation type='collection'>
-          <relation connection='excel-direct.0A1B2C3D4E5F6789' name='FACT_SUPPORT_ACTIVITY' table='[FACT_SUPPORT_ACTIVITY$]' type='table' />
-          <relation connection='excel-direct.0A1B2C3D4E5F6789' name='DIM_DATE' table='[DIM_DATE$]' type='table' />
-          <relation connection='excel-direct.0A1B2C3D4E5F6789' name='DIM_SUPPORT_CATEGORY' table='[DIM_SUPPORT_CATEGORY$]' type='table' />
-          <relation connection='excel-direct.0A1B2C3D4E5F6789' name='DIM_USER' table='[DIM_USER$]' type='table' />
+          <relation connection='excel-direct.1E2F3A4B' name='FACT_SUPPORT_ACTIVITY' table='[FACT_SUPPORT_ACTIVITY$]' type='table' />
+          <relation connection='excel-direct.1E2F3A4B' name='DIM_DATE' table='[DIM_DATE$]' type='table' />
+          <relation connection='excel-direct.1E2F3A4B' name='DIM_SUPPORT_CATEGORY' table='[DIM_SUPPORT_CATEGORY$]' type='table' />
+          <relation connection='excel-direct.1E2F3A4B' name='DIM_USER' table='[DIM_USER$]' type='table' />
         </_.fcp.ObjectModelEncapsulateLegacy.true...relation>
 
+        <!-- ── 3c. COLUMN MAP ────────────────────────────────────────── -->
         <cols>
           <!-- FACT_SUPPORT_ACTIVITY columns -->
           <map key='[SUPPORT_ACTIVITY_ID]' value='[FACT_SUPPORT_ACTIVITY].[SUPPORT_ACTIVITY_ID]' />
@@ -47,37 +60,82 @@
           <map key='[RESOLUTION_TIME_HOURS]' value='[FACT_SUPPORT_ACTIVITY].[RESOLUTION_TIME_HOURS]' />
           <map key='[CUSTOMER_SATISFACTION_SCORE]' value='[FACT_SUPPORT_ACTIVITY].[CUSTOMER_SATISFACTION_SCORE]' />
           <map key='[RESOLUTION_STATUS]' value='[FACT_SUPPORT_ACTIVITY].[RESOLUTION_STATUS]' />
+          <map key='[ACTIVE_WORK_TIME_HOURS]' value='[FACT_SUPPORT_ACTIVITY].[ACTIVE_WORK_TIME_HOURS]' />
+          <map key='[AGENT_INTERACTIONS_COUNT]' value='[FACT_SUPPORT_ACTIVITY].[AGENT_INTERACTIONS_COUNT]' />
+          <map key='[COST_TO_RESOLVE]' value='[FACT_SUPPORT_ACTIVITY].[COST_TO_RESOLVE]' />
+          <map key='[CUSTOMER_INTERACTIONS_COUNT]' value='[FACT_SUPPORT_ACTIVITY].[CUSTOMER_INTERACTIONS_COUNT]' />
+          <map key='[CUSTOMER_WAIT_TIME_HOURS]' value='[FACT_SUPPORT_ACTIVITY].[CUSTOMER_WAIT_TIME_HOURS]' />
+          <map key='[ESCALATION_COUNT]' value='[FACT_SUPPORT_ACTIVITY].[ESCALATION_COUNT]' />
           <map key='[FIRST_CONTACT_RESOLUTION_FLAG]' value='[FACT_SUPPORT_ACTIVITY].[FIRST_CONTACT_RESOLUTION_FLAG]' />
           <map key='[FIRST_RESPONSE_TIME_HOURS]' value='[FACT_SUPPORT_ACTIVITY].[FIRST_RESPONSE_TIME_HOURS]' />
+          <map key='[FOLLOW_UP_REQUIRED]' value='[FACT_SUPPORT_ACTIVITY].[FOLLOW_UP_REQUIRED]' />
+          <map key='[KNOWLEDGE_BASE_ARTICLES_USED]' value='[FACT_SUPPORT_ACTIVITY].[KNOWLEDGE_BASE_ARTICLES_USED]' />
+          <map key='[PREVENTABLE_ISSUE]' value='[FACT_SUPPORT_ACTIVITY].[PREVENTABLE_ISSUE]' />
           <map key='[PRIORITY_LEVEL]' value='[FACT_SUPPORT_ACTIVITY].[PRIORITY_LEVEL]' />
-          <map key='[TICKET_TYPE]' value='[FACT_SUPPORT_ACTIVITY].[TICKET_TYPE]' />
+          <map key='[REASSIGNMENT_COUNT]' value='[FACT_SUPPORT_ACTIVITY].[REASSIGNMENT_COUNT]' />
+          <map key='[REOPENED_COUNT]' value='[FACT_SUPPORT_ACTIVITY].[REOPENED_COUNT]' />
+          <map key='[RESOLUTION_METHOD]' value='[FACT_SUPPORT_ACTIVITY].[RESOLUTION_METHOD]' />
           <map key='[ROOT_CAUSE_CATEGORY]' value='[FACT_SUPPORT_ACTIVITY].[ROOT_CAUSE_CATEGORY]' />
+          <map key='[SLA_BREACH_HOURS]' value='[FACT_SUPPORT_ACTIVITY].[SLA_BREACH_HOURS]' />
           <map key='[SLA_MET]' value='[FACT_SUPPORT_ACTIVITY].[SLA_MET]' />
-          <map key='[COST_TO_RESOLVE]' value='[FACT_SUPPORT_ACTIVITY].[COST_TO_RESOLVE]' />
-          <map key='[TICKET_OPEN_DATE]' value='[FACT_SUPPORT_ACTIVITY].[TICKET_OPEN_DATE]' />
           <map key='[TICKET_CLOSE_DATE]' value='[FACT_SUPPORT_ACTIVITY].[TICKET_CLOSE_DATE]' />
+          <map key='[TICKET_OPEN_DATE]' value='[FACT_SUPPORT_ACTIVITY].[TICKET_OPEN_DATE]' />
+          <map key='[TICKET_TYPE]' value='[FACT_SUPPORT_ACTIVITY].[TICKET_TYPE]' />
           
           <!-- DIM_DATE columns -->
+          <map key='[DATE_ID]' value='[DIM_DATE].[DATE_ID]' />
+          <map key='[DATE_KEY (DIM_DATE)]' value='[DIM_DATE].[DATE_KEY]' />
           <map key='[DATE_VALUE]' value='[DIM_DATE].[DATE_VALUE]' />
-          <map key='[MONTH_NAME]' value='[DIM_DATE].[MONTH_NAME]' />
-          <map key='[YEAR]' value='[DIM_DATE].[YEAR]' />
-          <map key='[QUARTER]' value='[DIM_DATE].[QUARTER]' />
           <map key='[DAY_NAME]' value='[DIM_DATE].[DAY_NAME]' />
+          <map key='[DAY_OF_MONTH]' value='[DIM_DATE].[DAY_OF_MONTH]' />
+          <map key='[DAY_OF_WEEK]' value='[DIM_DATE].[DAY_OF_WEEK]' />
+          <map key='[WEEK_OF_YEAR]' value='[DIM_DATE].[WEEK_OF_YEAR]' />
+          <map key='[MONTH]' value='[DIM_DATE].[MONTH]' />
+          <map key='[MONTH_NAME]' value='[DIM_DATE].[MONTH_NAME]' />
+          <map key='[QUARTER]' value='[DIM_DATE].[QUARTER]' />
+          <map key='[FISCAL_QUARTER]' value='[DIM_DATE].[FISCAL_QUARTER]' />
+          <map key='[YEAR]' value='[DIM_DATE].[YEAR]' />
+          <map key='[FISCAL_YEAR]' value='[DIM_DATE].[FISCAL_YEAR]' />
+          <map key='[IS_HOLIDAY]' value='[DIM_DATE].[IS_HOLIDAY]' />
+          <map key='[IS_WEEKEND]' value='[DIM_DATE].[IS_WEEKEND]' />
           
           <!-- DIM_SUPPORT_CATEGORY columns -->
+          <map key='[SUPPORT_CATEGORY_ID]' value='[DIM_SUPPORT_CATEGORY].[SUPPORT_CATEGORY_ID]' />
+          <map key='[SUPPORT_CATEGORY_KEY (DIM_SUPPORT_CATEGORY)]' value='[DIM_SUPPORT_CATEGORY].[SUPPORT_CATEGORY_KEY]' />
           <map key='[SUPPORT_CATEGORY]' value='[DIM_SUPPORT_CATEGORY].[SUPPORT_CATEGORY]' />
           <map key='[SUPPORT_SUBCATEGORY]' value='[DIM_SUPPORT_CATEGORY].[SUPPORT_SUBCATEGORY]' />
+          <map key='[PRIORITY_LEVEL (DIM_SUPPORT_CATEGORY)]' value='[DIM_SUPPORT_CATEGORY].[PRIORITY_LEVEL]' />
+          <map key='[CUSTOMER_IMPACT_LEVEL]' value='[DIM_SUPPORT_CATEGORY].[CUSTOMER_IMPACT_LEVEL]' />
           <map key='[DEPARTMENT_RESPONSIBLE]' value='[DIM_SUPPORT_CATEGORY].[DEPARTMENT_RESPONSIBLE]' />
+          <map key='[EXPECTED_RESOLUTION_TIME_HOURS]' value='[DIM_SUPPORT_CATEGORY].[EXPECTED_RESOLUTION_TIME_HOURS]' />
           <map key='[SLA_TARGET_HOURS]' value='[DIM_SUPPORT_CATEGORY].[SLA_TARGET_HOURS]' />
+          <map key='[REQUIRES_ESCALATION]' value='[DIM_SUPPORT_CATEGORY].[REQUIRES_ESCALATION]' />
+          <map key='[SELF_SERVICE_AVAILABLE]' value='[DIM_SUPPORT_CATEGORY].[SELF_SERVICE_AVAILABLE]' />
+          <map key='[KNOWLEDGE_BASE_ARTICLES]' value='[DIM_SUPPORT_CATEGORY].[KNOWLEDGE_BASE_ARTICLES]' />
+          <map key='[COMMON_RESOLUTION_STEPS]' value='[DIM_SUPPORT_CATEGORY].[COMMON_RESOLUTION_STEPS]' />
           
           <!-- DIM_USER columns -->
+          <map key='[USER_DIM_ID]' value='[DIM_USER].[USER_DIM_ID]' />
+          <map key='[USER_KEY (DIM_USER)]' value='[DIM_USER].[USER_KEY]' />
+          <map key='[USER_ID]' value='[DIM_USER].[USER_ID]' />
           <map key='[USER_NAME]' value='[DIM_USER].[USER_NAME]' />
+          <map key='[USER_ROLE]' value='[DIM_USER].[USER_ROLE]' />
+          <map key='[USER_STATUS]' value='[DIM_USER].[USER_STATUS]' />
+          <map key='[ACCOUNT_TYPE]' value='[DIM_USER].[ACCOUNT_TYPE]' />
           <map key='[COMPANY]' value='[DIM_USER].[COMPANY]' />
-          <map key='[PLAN_TYPE]' value='[DIM_USER].[PLAN_TYPE]' />
+          <map key='[EMAIL_DOMAIN]' value='[DIM_USER].[EMAIL_DOMAIN]' />
           <map key='[GEOGRAPHIC_REGION]' value='[DIM_USER].[GEOGRAPHIC_REGION]' />
           <map key='[INDUSTRY_SECTOR]' value='[DIM_USER].[INDUSTRY_SECTOR]' />
+          <map key='[LANGUAGE_PREFERENCE]' value='[DIM_USER].[LANGUAGE_PREFERENCE]' />
+          <map key='[PLAN_CATEGORY]' value='[DIM_USER].[PLAN_CATEGORY]' />
+          <map key='[PLAN_TYPE]' value='[DIM_USER].[PLAN_TYPE]' />
+          <map key='[REGISTRATION_DATE]' value='[DIM_USER].[REGISTRATION_DATE]' />
+          <map key='[EFFECTIVE_START_DATE]' value='[DIM_USER].[EFFECTIVE_START_DATE]' />
+          <map key='[EFFECTIVE_END_DATE]' value='[DIM_USER].[EFFECTIVE_END_DATE]' />
+          <map key='[IS_CURRENT_RECORD]' value='[DIM_USER].[IS_CURRENT_RECORD]' />
         </cols>
 
+        <!-- ── 3d. METADATA RECORDS ──────────────────────────────────── -->
         <metadata-records>
           <!-- FACT_SUPPORT_ACTIVITY metadata -->
           <metadata-record class='column'>
@@ -88,6 +146,39 @@
             <remote-alias>SUPPORT_ACTIVITY_ID</remote-alias>
             <ordinal>1</ordinal>
             <local-type>integer</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>USER_KEY</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[USER_KEY]</local-name>
+            <parent-name>[FACT_SUPPORT_ACTIVITY]</parent-name>
+            <remote-alias>USER_KEY</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>DATE_KEY</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[DATE_KEY]</local-name>
+            <parent-name>[FACT_SUPPORT_ACTIVITY]</parent-name>
+            <remote-alias>DATE_KEY</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SUPPORT_CATEGORY_KEY</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[SUPPORT_CATEGORY_KEY]</local-name>
+            <parent-name>[FACT_SUPPORT_ACTIVITY]</parent-name>
+            <remote-alias>SUPPORT_CATEGORY_KEY</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>string</local-type>
             <aggregation>Count</aggregation>
             <contains-null>true</contains-null>
           </metadata-record>
@@ -136,6 +227,17 @@
             <contains-null>true</contains-null>
           </metadata-record>
           <metadata-record class='column'>
+            <remote-name>FIRST_RESPONSE_TIME_HOURS</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[FIRST_RESPONSE_TIME_HOURS]</local-name>
+            <parent-name>[FACT_SUPPORT_ACTIVITY]</parent-name>
+            <remote-alias>FIRST_RESPONSE_TIME_HOURS</remote-alias>
+            <ordinal>15</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
             <remote-name>PRIORITY_LEVEL</remote-name>
             <remote-type>129</remote-type>
             <local-name>[PRIORITY_LEVEL]</local-name>
@@ -143,6 +245,28 @@
             <remote-alias>PRIORITY_LEVEL</remote-alias>
             <ordinal>19</ordinal>
             <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>ROOT_CAUSE_CATEGORY</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[ROOT_CAUSE_CATEGORY]</local-name>
+            <parent-name>[FACT_SUPPORT_ACTIVITY]</parent-name>
+            <remote-alias>ROOT_CAUSE_CATEGORY</remote-alias>
+            <ordinal>22</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SLA_MET</remote-name>
+            <remote-type>11</remote-type>
+            <local-name>[SLA_MET]</local-name>
+            <parent-name>[FACT_SUPPORT_ACTIVITY]</parent-name>
+            <remote-alias>SLA_MET</remote-alias>
+            <ordinal>25</ordinal>
+            <local-type>boolean</local-type>
             <aggregation>Count</aggregation>
             <contains-null>true</contains-null>
           </metadata-record>
@@ -158,14 +282,14 @@
             <contains-null>true</contains-null>
           </metadata-record>
           <metadata-record class='column'>
-            <remote-name>SLA_MET</remote-name>
-            <remote-type>11</remote-type>
-            <local-name>[SLA_MET]</local-name>
+            <remote-name>COST_TO_RESOLVE</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[COST_TO_RESOLVE]</local-name>
             <parent-name>[FACT_SUPPORT_ACTIVITY]</parent-name>
-            <remote-alias>SLA_MET</remote-alias>
-            <ordinal>25</ordinal>
-            <local-type>boolean</local-type>
-            <aggregation>Count</aggregation>
+            <remote-alias>COST_TO_RESOLVE</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
           </metadata-record>
           
@@ -230,17 +354,6 @@
           
           <!-- DIM_USER metadata -->
           <metadata-record class='column'>
-            <remote-name>COMPANY</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[COMPANY]</local-name>
-            <parent-name>[DIM_USER]</parent-name>
-            <remote-alias>COMPANY</remote-alias>
-            <ordinal>8</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <contains-null>true</contains-null>
-          </metadata-record>
-          <metadata-record class='column'>
             <remote-name>PLAN_TYPE</remote-name>
             <remote-type>129</remote-type>
             <local-name>[PLAN_TYPE]</local-name>
@@ -262,102 +375,133 @@
             <aggregation>Count</aggregation>
             <contains-null>true</contains-null>
           </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>COMPANY</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[COMPANY]</local-name>
+            <parent-name>[DIM_USER]</parent-name>
+            <remote-alias>COMPANY</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+          </metadata-record>
         </metadata-records>
+
       </connection>
 
+      <!-- ── 3e. CALCULATED FIELDS ────────────────────────────────────── -->
       <aliases enabled='yes' />
 
-      <!-- Calculated Fields -->
-      <column caption='Total Tickets' datatype='integer'
-              name='[Calculation_Total_Tickets]' role='measure' type='quantitative'>
+      <!-- KPI Calculations -->
+      <column caption='Total Activities' datatype='integer'
+              name='[Calculation_TOTAL_ACTIVITIES]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
       </column>
 
       <column caption='Average Resolution Time' datatype='real'
-              name='[Calculation_Avg_Resolution_Time]' role='measure' type='quantitative'>
+              name='[Calculation_AVG_RESOLUTION_TIME]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='AVG([RESOLUTION_TIME_HOURS])' />
       </column>
 
       <column caption='SLA Compliance Rate' datatype='real'
-              name='[Calculation_SLA_Rate]' role='measure' type='quantitative'>
+              name='[Calculation_SLA_COMPLIANCE_RATE]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='SUM(IF [SLA_MET] = TRUE THEN 1 ELSE 0 END) / COUNT([SUPPORT_ACTIVITY_ID])' />
       </column>
 
       <column caption='First Contact Resolution Rate' datatype='real'
-              name='[Calculation_FCR_Rate]' role='measure' type='quantitative'>
+              name='[Calculation_FCR_RATE]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='SUM(IF [FIRST_CONTACT_RESOLUTION_FLAG] = TRUE THEN 1 ELSE 0 END) / COUNT([SUPPORT_ACTIVITY_ID])' />
       </column>
 
       <column caption='Average Customer Satisfaction' datatype='real'
-              name='[Calculation_Avg_Satisfaction]' role='measure' type='quantitative'>
+              name='[Calculation_AVG_SATISFACTION]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='AVG([CUSTOMER_SATISFACTION_SCORE])' />
       </column>
 
       <column caption='Total Cost to Resolve' datatype='integer'
-              name='[Calculation_Total_Cost]' role='measure' type='quantitative'>
+              name='[Calculation_TOTAL_COST]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='SUM([COST_TO_RESOLVE])' />
       </column>
 
-      <!-- Dimension Columns -->
+      <column caption='Average First Response Time' datatype='real'
+              name='[Calculation_AVG_FIRST_RESPONSE]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='AVG([FIRST_RESPONSE_TIME_HOURS])' />
+      </column>
+
+      <column caption='Unique Users Count' datatype='integer'
+              name='[Calculation_UNIQUE_USERS]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='COUNTD([USER_KEY])' />
+      </column>
+
+      <!-- ── 3f. DIMENSION COLUMNS ─────────────────────────────────────── -->
       <column caption='Support Category' datatype='string' name='[SUPPORT_CATEGORY]' role='dimension' type='nominal' />
       <column caption='Ticket Type' datatype='string' name='[TICKET_TYPE]' role='dimension' type='nominal' />
-      <column caption='Priority Level' datatype='string' name='[PRIORITY_LEVEL]' role='dimension' type='nominal' />
       <column caption='Resolution Status' datatype='string' name='[RESOLUTION_STATUS]' role='dimension' type='nominal' />
-      <column caption='Company' datatype='string' name='[COMPANY]' role='dimension' type='nominal' />
+      <column caption='Priority Level' datatype='string' name='[PRIORITY_LEVEL]' role='dimension' type='nominal' />
+      <column caption='Root Cause Category' datatype='string' name='[ROOT_CAUSE_CATEGORY]' role='dimension' type='nominal' />
+      <column caption='Department Responsible' datatype='string' name='[DEPARTMENT_RESPONSIBLE]' role='dimension' type='nominal' />
       <column caption='Plan Type' datatype='string' name='[PLAN_TYPE]' role='dimension' type='nominal' />
       <column caption='Geographic Region' datatype='string' name='[GEOGRAPHIC_REGION]' role='dimension' type='nominal' />
-      <column caption='Department' datatype='string' name='[DEPARTMENT_RESPONSIBLE]' role='dimension' type='nominal' />
-      <column caption='Root Cause Category' datatype='string' name='[ROOT_CAUSE_CATEGORY]' role='dimension' type='nominal' />
+      <column caption='Company' datatype='string' name='[COMPANY]' role='dimension' type='nominal' />
       <column caption='Month Name' datatype='string' name='[MONTH_NAME]' role='dimension' type='nominal' />
       <column caption='Year' datatype='integer' name='[YEAR]' role='dimension' type='ordinal' />
       <column caption='Date Value' datatype='date' name='[DATE_VALUE]' role='dimension' type='ordinal' />
 
-      <!-- Column Instances -->
+      <!-- ── 3g. COLUMN INSTANCES ──────────────────────────────────────── -->
+      <!-- Dimension instances -->
       <column-instance column='[SUPPORT_CATEGORY]' derivation='None' name='[none:SUPPORT_CATEGORY:nk]' pivot='key' type='nominal' />
       <column-instance column='[TICKET_TYPE]' derivation='None' name='[none:TICKET_TYPE:nk]' pivot='key' type='nominal' />
-      <column-instance column='[PRIORITY_LEVEL]' derivation='None' name='[none:PRIORITY_LEVEL:nk]' pivot='key' type='nominal' />
       <column-instance column='[RESOLUTION_STATUS]' derivation='None' name='[none:RESOLUTION_STATUS:nk]' pivot='key' type='nominal' />
-      <column-instance column='[COMPANY]' derivation='None' name='[none:COMPANY:nk]' pivot='key' type='nominal' />
+      <column-instance column='[PRIORITY_LEVEL]' derivation='None' name='[none:PRIORITY_LEVEL:nk]' pivot='key' type='nominal' />
+      <column-instance column='[ROOT_CAUSE_CATEGORY]' derivation='None' name='[none:ROOT_CAUSE_CATEGORY:nk]' pivot='key' type='nominal' />
+      <column-instance column='[DEPARTMENT_RESPONSIBLE]' derivation='None' name='[none:DEPARTMENT_RESPONSIBLE:nk]' pivot='key' type='nominal' />
       <column-instance column='[PLAN_TYPE]' derivation='None' name='[none:PLAN_TYPE:nk]' pivot='key' type='nominal' />
       <column-instance column='[GEOGRAPHIC_REGION]' derivation='None' name='[none:GEOGRAPHIC_REGION:nk]' pivot='key' type='nominal' />
-      <column-instance column='[DEPARTMENT_RESPONSIBLE]' derivation='None' name='[none:DEPARTMENT_RESPONSIBLE:nk]' pivot='key' type='nominal' />
-      <column-instance column='[ROOT_CAUSE_CATEGORY]' derivation='None' name='[none:ROOT_CAUSE_CATEGORY:nk]' pivot='key' type='nominal' />
+      <column-instance column='[COMPANY]' derivation='None' name='[none:COMPANY:nk]' pivot='key' type='nominal' />
       <column-instance column='[MONTH_NAME]' derivation='None' name='[none:MONTH_NAME:nk]' pivot='key' type='nominal' />
       <column-instance column='[YEAR]' derivation='None' name='[none:YEAR:ok]' pivot='key' type='ordinal' />
       <column-instance column='[DATE_VALUE]' derivation='None' name='[none:DATE_VALUE:ok]' pivot='key' type='ordinal' />
-      <column-instance column='[Calculation_Total_Tickets]' derivation='User' name='[usr:Calculation_Total_Tickets:qk]' pivot='key' type='quantitative' />
-      <column-instance column='[Calculation_Avg_Resolution_Time]' derivation='User' name='[usr:Calculation_Avg_Resolution_Time:qk]' pivot='key' type='quantitative' />
-      <column-instance column='[Calculation_SLA_Rate]' derivation='User' name='[usr:Calculation_SLA_Rate:qk]' pivot='key' type='quantitative' />
-      <column-instance column='[Calculation_FCR_Rate]' derivation='User' name='[usr:Calculation_FCR_Rate:qk]' pivot='key' type='quantitative' />
-      <column-instance column='[Calculation_Avg_Satisfaction]' derivation='User' name='[usr:Calculation_Avg_Satisfaction:qk]' pivot='key' type='quantitative' />
-      <column-instance column='[Calculation_Total_Cost]' derivation='User' name='[usr:Calculation_Total_Cost:qk]' pivot='key' type='quantitative' />
+      
+      <!-- Measure instances -->
+      <column-instance column='[Calculation_TOTAL_ACTIVITIES]' derivation='User' name='[usr:Calculation_TOTAL_ACTIVITIES:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[Calculation_AVG_RESOLUTION_TIME]' derivation='User' name='[usr:Calculation_AVG_RESOLUTION_TIME:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[Calculation_SLA_COMPLIANCE_RATE]' derivation='User' name='[usr:Calculation_SLA_COMPLIANCE_RATE:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[Calculation_FCR_RATE]' derivation='User' name='[usr:Calculation_FCR_RATE:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[Calculation_AVG_SATISFACTION]' derivation='User' name='[usr:Calculation_AVG_SATISFACTION:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[Calculation_TOTAL_COST]' derivation='User' name='[usr:Calculation_TOTAL_COST:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[Calculation_AVG_FIRST_RESPONSE]' derivation='User' name='[usr:Calculation_AVG_FIRST_RESPONSE:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[Calculation_UNIQUE_USERS]' derivation='User' name='[usr:Calculation_UNIQUE_USERS:qk]' pivot='key' type='quantitative' />
 
+      <!-- ── 3h. LAYOUT — CRITICAL: must appear BEFORE object-graph ────── -->
       <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
 
+      <!-- ── 3i. OBJECT GRAPH (relationships between tables) ───────────── -->
       <_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
         <objects>
           <object caption='FACT_SUPPORT_ACTIVITY' id='FACT_SUPPORT_ACTIVITY_obj'>
             <properties context=''>
-              <relation connection='excel-direct.0A1B2C3D4E5F6789' name='FACT_SUPPORT_ACTIVITY' table='[FACT_SUPPORT_ACTIVITY$]' type='table' />
+              <relation connection='excel-direct.1E2F3A4B' name='FACT_SUPPORT_ACTIVITY' table='[FACT_SUPPORT_ACTIVITY$]' type='table' />
             </properties>
           </object>
           <object caption='DIM_DATE' id='DIM_DATE_obj'>
             <properties context=''>
-              <relation connection='excel-direct.0A1B2C3D4E5F6789' name='DIM_DATE' table='[DIM_DATE$]' type='table' />
+              <relation connection='excel-direct.1E2F3A4B' name='DIM_DATE' table='[DIM_DATE$]' type='table' />
             </properties>
           </object>
           <object caption='DIM_SUPPORT_CATEGORY' id='DIM_SUPPORT_CATEGORY_obj'>
             <properties context=''>
-              <relation connection='excel-direct.0A1B2C3D4E5F6789' name='DIM_SUPPORT_CATEGORY' table='[DIM_SUPPORT_CATEGORY$]' type='table' />
+              <relation connection='excel-direct.1E2F3A4B' name='DIM_SUPPORT_CATEGORY' table='[DIM_SUPPORT_CATEGORY$]' type='table' />
             </properties>
           </object>
           <object caption='DIM_USER' id='DIM_USER_obj'>
             <properties context=''>
-              <relation connection='excel-direct.0A1B2C3D4E5F6789' name='DIM_USER' table='[DIM_USER$]' type='table' />
+              <relation connection='excel-direct.1E2F3A4B' name='DIM_USER' table='[DIM_USER$]' type='table' />
             </properties>
           </object>
         </objects>
         <relationships>
+          <!-- FACT ↔ DIM_DATE join -->
           <relationship>
             <expression op='='>
               <expression op='[DATE_KEY]' />
@@ -366,14 +510,7 @@
             <first-end-point object-id='FACT_SUPPORT_ACTIVITY_obj' />
             <second-end-point object-id='DIM_DATE_obj' />
           </relationship>
-          <relationship>
-            <expression op='='>
-              <expression op='[USER_KEY]' />
-              <expression op='[USER_KEY (DIM_USER)]' />
-            </expression>
-            <first-end-point object-id='FACT_SUPPORT_ACTIVITY_obj' />
-            <second-end-point object-id='DIM_USER_obj' />
-          </relationship>
+          <!-- FACT ↔ DIM_SUPPORT_CATEGORY join -->
           <relationship>
             <expression op='='>
               <expression op='[SUPPORT_CATEGORY_KEY]' />
@@ -382,15 +519,27 @@
             <first-end-point object-id='FACT_SUPPORT_ACTIVITY_obj' />
             <second-end-point object-id='DIM_SUPPORT_CATEGORY_obj' />
           </relationship>
+          <!-- FACT ↔ DIM_USER join -->
+          <relationship>
+            <expression op='='>
+              <expression op='[USER_KEY]' />
+              <expression op='[USER_KEY (DIM_USER)]' />
+            </expression>
+            <first-end-point object-id='FACT_SUPPORT_ACTIVITY_obj' />
+            <second-end-point object-id='DIM_USER_obj' />
+          </relationship>
         </relationships>
       </_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
 
     </datasource>
   </datasources>
 
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 4: WORKSHEETS                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <worksheets>
 
-    <!-- KPI Dashboard Sheet -->
+    <!-- ── WORKSHEET 1: KPI SCORECARD ──────────────────────────────── -->
     <worksheet name='Service KPIs'>
       <layout-options>
         <title><formatted-text><run fontsize='14'>Key Performance Indicators</run></formatted-text></title>
@@ -398,25 +547,25 @@
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
-            <column caption='Total Tickets' datatype='integer' name='[Calculation_Total_Tickets]' role='measure' type='quantitative'>
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
+            <column caption='Total Activities' datatype='integer' name='[Calculation_TOTAL_ACTIVITIES]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
             </column>
-            <column caption='Average Resolution Time' datatype='real' name='[Calculation_Avg_Resolution_Time]' role='measure' type='quantitative'>
+            <column caption='Average Resolution Time' datatype='real' name='[Calculation_AVG_RESOLUTION_TIME]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='AVG([RESOLUTION_TIME_HOURS])' />
             </column>
-            <column caption='SLA Compliance Rate' datatype='real' name='[Calculation_SLA_Rate]' role='measure' type='quantitative'>
+            <column caption='SLA Compliance Rate' datatype='real' name='[Calculation_SLA_COMPLIANCE_RATE]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='SUM(IF [SLA_MET] = TRUE THEN 1 ELSE 0 END) / COUNT([SUPPORT_ACTIVITY_ID])' />
             </column>
-            <column caption='First Contact Resolution Rate' datatype='real' name='[Calculation_FCR_Rate]' role='measure' type='quantitative'>
+            <column caption='First Contact Resolution Rate' datatype='real' name='[Calculation_FCR_RATE]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='SUM(IF [FIRST_CONTACT_RESOLUTION_FLAG] = TRUE THEN 1 ELSE 0 END) / COUNT([SUPPORT_ACTIVITY_ID])' />
             </column>
-            <column-instance column='[Calculation_Total_Tickets]' derivation='User' name='[usr:Calculation_Total_Tickets:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[Calculation_Avg_Resolution_Time]' derivation='User' name='[usr:Calculation_Avg_Resolution_Time:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[Calculation_SLA_Rate]' derivation='User' name='[usr:Calculation_SLA_Rate:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[Calculation_FCR_Rate]' derivation='User' name='[usr:Calculation_FCR_Rate:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_TOTAL_ACTIVITIES]' derivation='User' name='[usr:Calculation_TOTAL_ACTIVITIES:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_AVG_RESOLUTION_TIME]' derivation='User' name='[usr:Calculation_AVG_RESOLUTION_TIME:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_SLA_COMPLIANCE_RATE]' derivation='User' name='[usr:Calculation_SLA_COMPLIANCE_RATE:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_FCR_RATE]' derivation='User' name='[usr:Calculation_FCR_RATE:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -426,39 +575,38 @@
             <view><breakdown value='auto' /></view>
             <mark class='Text' />
             <encodings>
-              <text column='[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Tickets:qk]' />
+              <text column='[federated.1A2B3C4D].[usr:Calculation_TOTAL_ACTIVITIES:qk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
                 <format attr='font-size' value='18' />
-                <format attr='font-weight' value='bold' />
               </style-rule>
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Tickets:qk] + [federated.0A1B2C3D4E5F6789].[usr:Calculation_Avg_Resolution_Time:qk] + [federated.0A1B2C3D4E5F6789].[usr:Calculation_SLA_Rate:qk] + [federated.0A1B2C3D4E5F6789].[usr:Calculation_FCR_Rate:qk]</rows>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_TOTAL_ACTIVITIES:qk] + [federated.1A2B3C4D].[usr:Calculation_AVG_RESOLUTION_TIME:qk] + [federated.1A2B3C4D].[usr:Calculation_SLA_COMPLIANCE_RATE:qk] + [federated.1A2B3C4D].[usr:Calculation_FCR_RATE:qk]</rows>
         <cols />
       </table>
       <simple-id uuid='{AA000001-0000-0000-0000-000000000001}' />
     </worksheet>
 
-    <!-- Ticket Volume by Type Bar Chart -->
+    <!-- ── WORKSHEET 2: TICKET VOLUME BY TYPE ───────────────────────── -->
     <worksheet name='Ticket Volume by Type'>
       <layout-options>
-        <title><formatted-text><run fontsize='13'>Support Ticket Volume by Type</run></formatted-text></title>
+        <title><formatted-text><run fontsize='13'>Ticket Volume by Type</run></formatted-text></title>
       </layout-options>
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
             <column caption='Ticket Type' datatype='string' name='[TICKET_TYPE]' role='dimension' type='nominal' />
-            <column caption='Total Tickets' datatype='integer' name='[Calculation_Total_Tickets]' role='measure' type='quantitative'>
+            <column caption='Total Activities' datatype='integer' name='[Calculation_TOTAL_ACTIVITIES]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
             </column>
             <column-instance column='[TICKET_TYPE]' derivation='None' name='[none:TICKET_TYPE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_Total_Tickets]' derivation='User' name='[usr:Calculation_Total_Tickets:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_TOTAL_ACTIVITIES]' derivation='User' name='[usr:Calculation_TOTAL_ACTIVITIES:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -468,7 +616,7 @@
             <view><breakdown value='auto' /></view>
             <mark class='Bar' />
             <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:TICKET_TYPE:nk]' />
+              <color column='[federated.1A2B3C4D].[none:TICKET_TYPE:nk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -478,13 +626,13 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Tickets:qk]</rows>
-        <cols>[federated.0A1B2C3D4E5F6789].[none:TICKET_TYPE:nk]</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_TOTAL_ACTIVITIES:qk]</rows>
+        <cols>[federated.1A2B3C4D].[none:TICKET_TYPE:nk]</cols>
       </table>
       <simple-id uuid='{AA000002-0000-0000-0000-000000000002}' />
     </worksheet>
 
-    <!-- Average Resolution Time Trend Line Chart -->
+    <!-- ── WORKSHEET 3: RESOLUTION TIME TREND ────────────────────────── -->
     <worksheet name='Resolution Time Trend'>
       <layout-options>
         <title><formatted-text><run fontsize='13'>Average Resolution Time Trend</run></formatted-text></title>
@@ -492,17 +640,17 @@
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
-            <column caption='Average Resolution Time' datatype='real' name='[Calculation_Avg_Resolution_Time]' role='measure' type='quantitative'>
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
+            <column caption='Average Resolution Time' datatype='real' name='[Calculation_AVG_RESOLUTION_TIME]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='AVG([RESOLUTION_TIME_HOURS])' />
             </column>
             <column caption='Month Name' datatype='string' name='[MONTH_NAME]' role='dimension' type='nominal' />
             <column caption='Year' datatype='integer' name='[YEAR]' role='dimension' type='ordinal' />
             <column-instance column='[MONTH_NAME]' derivation='None' name='[none:MONTH_NAME:nk]' pivot='key' type='nominal' />
             <column-instance column='[YEAR]' derivation='None' name='[none:YEAR:ok]' pivot='key' type='ordinal' />
-            <column-instance column='[Calculation_Avg_Resolution_Time]' derivation='User' name='[usr:Calculation_Avg_Resolution_Time:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_AVG_RESOLUTION_TIME]' derivation='User' name='[usr:Calculation_AVG_RESOLUTION_TIME:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -518,13 +666,13 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Avg_Resolution_Time:qk]</rows>
-        <cols>([federated.0A1B2C3D4E5F6789].[none:YEAR:ok] / [federated.0A1B2C3D4E5F6789].[none:MONTH_NAME:nk])</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_AVG_RESOLUTION_TIME:qk]</rows>
+        <cols>([federated.1A2B3C4D].[none:YEAR:ok] / [federated.1A2B3C4D].[none:MONTH_NAME:nk])</cols>
       </table>
       <simple-id uuid='{AA000003-0000-0000-0000-000000000003}' />
     </worksheet>
 
-    <!-- Resolution Status Distribution Pie Chart -->
+    <!-- ── WORKSHEET 4: RESOLUTION STATUS DISTRIBUTION ───────────────── -->
     <worksheet name='Resolution Status Distribution'>
       <layout-options>
         <title><formatted-text><run fontsize='13'>Resolution Status Distribution</run></formatted-text></title>
@@ -532,15 +680,15 @@
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
             <column caption='Resolution Status' datatype='string' name='[RESOLUTION_STATUS]' role='dimension' type='nominal' />
-            <column caption='Total Tickets' datatype='integer' name='[Calculation_Total_Tickets]' role='measure' type='quantitative'>
+            <column caption='Total Activities' datatype='integer' name='[Calculation_TOTAL_ACTIVITIES]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
             </column>
             <column-instance column='[RESOLUTION_STATUS]' derivation='None' name='[none:RESOLUTION_STATUS:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_Total_Tickets]' derivation='User' name='[usr:Calculation_Total_Tickets:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_TOTAL_ACTIVITIES]' derivation='User' name='[usr:Calculation_TOTAL_ACTIVITIES:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -550,8 +698,8 @@
             <view><breakdown value='auto' /></view>
             <mark class='Pie' />
             <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:RESOLUTION_STATUS:nk]' />
-              <size column='[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Tickets:qk]' />
+              <color column='[federated.1A2B3C4D].[none:RESOLUTION_STATUS:nk]' />
+              <size column='[federated.1A2B3C4D].[usr:Calculation_TOTAL_ACTIVITIES:qk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -565,23 +713,23 @@
       <simple-id uuid='{AA000004-0000-0000-0000-000000000004}' />
     </worksheet>
 
-    <!-- Activities by Priority Bar Chart -->
+    <!-- ── WORKSHEET 5: ACTIVITIES BY PRIORITY ───────────────────────── -->
     <worksheet name='Activities by Priority'>
       <layout-options>
-        <title><formatted-text><run fontsize='13'>Support Activities by Priority Level</run></formatted-text></title>
+        <title><formatted-text><run fontsize='13'>Activities by Priority Level</run></formatted-text></title>
       </layout-options>
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
             <column caption='Priority Level' datatype='string' name='[PRIORITY_LEVEL]' role='dimension' type='nominal' />
-            <column caption='Total Tickets' datatype='integer' name='[Calculation_Total_Tickets]' role='measure' type='quantitative'>
+            <column caption='Total Activities' datatype='integer' name='[Calculation_TOTAL_ACTIVITIES]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
             </column>
             <column-instance column='[PRIORITY_LEVEL]' derivation='None' name='[none:PRIORITY_LEVEL:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_Total_Tickets]' derivation='User' name='[usr:Calculation_Total_Tickets:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_TOTAL_ACTIVITIES]' derivation='User' name='[usr:Calculation_TOTAL_ACTIVITIES:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -591,7 +739,7 @@
             <view><breakdown value='auto' /></view>
             <mark class='Bar' />
             <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:PRIORITY_LEVEL:nk]' />
+              <color column='[federated.1A2B3C4D].[none:PRIORITY_LEVEL:nk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -601,29 +749,29 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Tickets:qk]</rows>
-        <cols>[federated.0A1B2C3D4E5F6789].[none:PRIORITY_LEVEL:nk]</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_TOTAL_ACTIVITIES:qk]</rows>
+        <cols>[federated.1A2B3C4D].[none:PRIORITY_LEVEL:nk]</cols>
       </table>
       <simple-id uuid='{AA000005-0000-0000-0000-000000000005}' />
     </worksheet>
 
-    <!-- Users by Region Bar Chart -->
+    <!-- ── WORKSHEET 6: USERS BY REGION ──────────────────────────────── -->
     <worksheet name='Users by Region'>
       <layout-options>
-        <title><formatted-text><run fontsize='13'>Support Tickets by Geographic Region</run></formatted-text></title>
+        <title><formatted-text><run fontsize='13'>Users by Geographic Region</run></formatted-text></title>
       </layout-options>
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
             <column caption='Geographic Region' datatype='string' name='[GEOGRAPHIC_REGION]' role='dimension' type='nominal' />
-            <column caption='Total Tickets' datatype='integer' name='[Calculation_Total_Tickets]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
+            <column caption='Unique Users Count' datatype='integer' name='[Calculation_UNIQUE_USERS]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNTD([USER_KEY])' />
             </column>
             <column-instance column='[GEOGRAPHIC_REGION]' derivation='None' name='[none:GEOGRAPHIC_REGION:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_Total_Tickets]' derivation='User' name='[usr:Calculation_Total_Tickets:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_UNIQUE_USERS]' derivation='User' name='[usr:Calculation_UNIQUE_USERS:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -633,7 +781,7 @@
             <view><breakdown value='auto' /></view>
             <mark class='Bar' />
             <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:GEOGRAPHIC_REGION:nk]' />
+              <color column='[federated.1A2B3C4D].[none:GEOGRAPHIC_REGION:nk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -643,29 +791,29 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Tickets:qk]</rows>
-        <cols>[federated.0A1B2C3D4E5F6789].[none:GEOGRAPHIC_REGION:nk]</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_UNIQUE_USERS:qk]</rows>
+        <cols>[federated.1A2B3C4D].[none:GEOGRAPHIC_REGION:nk]</cols>
       </table>
       <simple-id uuid='{AA000006-0000-0000-0000-000000000006}' />
     </worksheet>
 
-    <!-- Users by Plan Type Bar Chart -->
+    <!-- ── WORKSHEET 7: USERS BY PLAN TYPE ───────────────────────────── -->
     <worksheet name='Users by Plan Type'>
       <layout-options>
-        <title><formatted-text><run fontsize='13'>Support Tickets by Plan Type</run></formatted-text></title>
+        <title><formatted-text><run fontsize='13'>Users by Plan Type</run></formatted-text></title>
       </layout-options>
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
             <column caption='Plan Type' datatype='string' name='[PLAN_TYPE]' role='dimension' type='nominal' />
-            <column caption='Total Tickets' datatype='integer' name='[Calculation_Total_Tickets]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
+            <column caption='Unique Users Count' datatype='integer' name='[Calculation_UNIQUE_USERS]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNTD([USER_KEY])' />
             </column>
             <column-instance column='[PLAN_TYPE]' derivation='None' name='[none:PLAN_TYPE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_Total_Tickets]' derivation='User' name='[usr:Calculation_Total_Tickets:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_UNIQUE_USERS]' derivation='User' name='[usr:Calculation_UNIQUE_USERS:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -675,7 +823,7 @@
             <view><breakdown value='auto' /></view>
             <mark class='Bar' />
             <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:PLAN_TYPE:nk]' />
+              <color column='[federated.1A2B3C4D].[none:PLAN_TYPE:nk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -685,31 +833,29 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Tickets:qk]</rows>
-        <cols>[federated.0A1B2C3D4E5F6789].[none:PLAN_TYPE:nk]</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_UNIQUE_USERS:qk]</rows>
+        <cols>[federated.1A2B3C4D].[none:PLAN_TYPE:nk]</cols>
       </table>
       <simple-id uuid='{AA000007-0000-0000-0000-000000000007}' />
     </worksheet>
 
-    <!-- Users by Support Category Grouped Bar -->
+    <!-- ── WORKSHEET 8: USERS BY SUPPORT CATEGORY ────────────────────── -->
     <worksheet name='Users by Support Category'>
       <layout-options>
-        <title><formatted-text><run fontsize='13'>Support Tickets by Category</run></formatted-text></title>
+        <title><formatted-text><run fontsize='13'>Users by Support Category</run></formatted-text></title>
       </layout-options>
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
             <column caption='Support Category' datatype='string' name='[SUPPORT_CATEGORY]' role='dimension' type='nominal' />
-            <column caption='Priority Level' datatype='string' name='[PRIORITY_LEVEL]' role='dimension' type='nominal' />
-            <column caption='Total Tickets' datatype='integer' name='[Calculation_Total_Tickets]' role='measure' type='quantitative'>
+            <column caption='Total Activities' datatype='integer' name='[Calculation_TOTAL_ACTIVITIES]' role='measure' type='quantitative'>
               <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
             </column>
             <column-instance column='[SUPPORT_CATEGORY]' derivation='None' name='[none:SUPPORT_CATEGORY:nk]' pivot='key' type='nominal' />
-            <column-instance column='[PRIORITY_LEVEL]' derivation='None' name='[none:PRIORITY_LEVEL:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_Total_Tickets]' derivation='User' name='[usr:Calculation_Total_Tickets:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_TOTAL_ACTIVITIES]' derivation='User' name='[usr:Calculation_TOTAL_ACTIVITIES:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -719,7 +865,7 @@
             <view><breakdown value='auto' /></view>
             <mark class='Bar' />
             <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:SUPPORT_CATEGORY:nk]' />
+              <color column='[federated.1A2B3C4D].[none:SUPPORT_CATEGORY:nk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -729,29 +875,29 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Tickets:qk]</rows>
-        <cols>([federated.0A1B2C3D4E5F6789].[none:SUPPORT_CATEGORY:nk] / [federated.0A1B2C3D4E5F6789].[none:PRIORITY_LEVEL:nk])</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_TOTAL_ACTIVITIES:qk]</rows>
+        <cols>([federated.1A2B3C4D].[none:SUPPORT_CATEGORY:nk] / [federated.1A2B3C4D].[none:PLAN_TYPE:nk])</cols>
       </table>
       <simple-id uuid='{AA000008-0000-0000-0000-000000000008}' />
     </worksheet>
 
-    <!-- Satisfaction by Company Bar Chart -->
-    <worksheet name='Satisfaction by Company'>
+    <!-- ── WORKSHEET 9: FIRST RESPONSE BY CATEGORY ───────────────────── -->
+    <worksheet name='First Response by Category'>
       <layout-options>
-        <title><formatted-text><run fontsize='13'>Average Customer Satisfaction by Company</run></formatted-text></title>
+        <title><formatted-text><run fontsize='13'>First Response Time by Category</run></formatted-text></title>
       </layout-options>
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
-            <column caption='Company' datatype='string' name='[COMPANY]' role='dimension' type='nominal' />
-            <column caption='Average Customer Satisfaction' datatype='real' name='[Calculation_Avg_Satisfaction]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='AVG([CUSTOMER_SATISFACTION_SCORE])' />
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
+            <column caption='Support Category' datatype='string' name='[SUPPORT_CATEGORY]' role='dimension' type='nominal' />
+            <column caption='Average First Response Time' datatype='real' name='[Calculation_AVG_FIRST_RESPONSE]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='AVG([FIRST_RESPONSE_TIME_HOURS])' />
             </column>
-            <column-instance column='[COMPANY]' derivation='None' name='[none:COMPANY:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_Avg_Satisfaction]' derivation='User' name='[usr:Calculation_Avg_Satisfaction:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[SUPPORT_CATEGORY]' derivation='None' name='[none:SUPPORT_CATEGORY:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_AVG_FIRST_RESPONSE]' derivation='User' name='[usr:Calculation_AVG_FIRST_RESPONSE:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -760,9 +906,6 @@
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view><breakdown value='auto' /></view>
             <mark class='Bar' />
-            <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:COMPANY:nk]' />
-            </encodings>
             <style>
               <style-rule element='mark'>
                 <format attr='mark-labels-show' value='true' />
@@ -771,29 +914,29 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Avg_Satisfaction:qk]</rows>
-        <cols>[federated.0A1B2C3D4E5F6789].[none:COMPANY:nk]</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_AVG_FIRST_RESPONSE:qk]</rows>
+        <cols>[federated.1A2B3C4D].[none:SUPPORT_CATEGORY:nk]</cols>
       </table>
       <simple-id uuid='{AA000009-0000-0000-0000-000000000009}' />
     </worksheet>
 
-    <!-- Cost to Resolve by Category Bar Chart -->
-    <worksheet name='Cost to Resolve by Category'>
+    <!-- ── WORKSHEET 10: SATISFACTION BY COMPANY ─────────────────────── -->
+    <worksheet name='Satisfaction by Company'>
       <layout-options>
-        <title><formatted-text><run fontsize='13'>Total Cost to Resolve by Support Category</run></formatted-text></title>
+        <title><formatted-text><run fontsize='13'>Customer Satisfaction by Company</run></formatted-text></title>
       </layout-options>
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
-            <column caption='Support Category' datatype='string' name='[SUPPORT_CATEGORY]' role='dimension' type='nominal' />
-            <column caption='Total Cost to Resolve' datatype='integer' name='[Calculation_Total_Cost]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='SUM([COST_TO_RESOLVE])' />
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
+            <column caption='Company' datatype='string' name='[COMPANY]' role='dimension' type='nominal' />
+            <column caption='Average Customer Satisfaction' datatype='real' name='[Calculation_AVG_SATISFACTION]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='AVG([CUSTOMER_SATISFACTION_SCORE])' />
             </column>
-            <column-instance column='[SUPPORT_CATEGORY]' derivation='None' name='[none:SUPPORT_CATEGORY:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_Total_Cost]' derivation='User' name='[usr:Calculation_Total_Cost:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[COMPANY]' derivation='None' name='[none:COMPANY:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_AVG_SATISFACTION]' derivation='User' name='[usr:Calculation_AVG_SATISFACTION:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -803,7 +946,7 @@
             <view><breakdown value='auto' /></view>
             <mark class='Bar' />
             <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:SUPPORT_CATEGORY:nk]' />
+              <color column='[federated.1A2B3C4D].[none:COMPANY:nk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -813,29 +956,29 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Cost:qk]</rows>
-        <cols>[federated.0A1B2C3D4E5F6789].[none:SUPPORT_CATEGORY:nk]</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_AVG_SATISFACTION:qk]</rows>
+        <cols>[federated.1A2B3C4D].[none:COMPANY:nk]</cols>
       </table>
       <simple-id uuid='{AA00000A-0000-0000-0000-00000000000A}' />
     </worksheet>
 
-    <!-- Root Cause Analysis Bar Chart -->
-    <worksheet name='Root Cause Analysis'>
+    <!-- ── WORKSHEET 11: COST TO RESOLVE BY CATEGORY ─────────────────── -->
+    <worksheet name='Cost to Resolve by Category'>
       <layout-options>
-        <title><formatted-text><run fontsize='13'>Support Tickets by Root Cause Category</run></formatted-text></title>
+        <title><formatted-text><run fontsize='13'>Cost to Resolve by Category</run></formatted-text></title>
       </layout-options>
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
-            <column caption='Root Cause Category' datatype='string' name='[ROOT_CAUSE_CATEGORY]' role='dimension' type='nominal' />
-            <column caption='Total Tickets' datatype='integer' name='[Calculation_Total_Tickets]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
+            <column caption='Support Category' datatype='string' name='[SUPPORT_CATEGORY]' role='dimension' type='nominal' />
+            <column caption='Total Cost to Resolve' datatype='integer' name='[Calculation_TOTAL_COST]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='SUM([COST_TO_RESOLVE])' />
             </column>
-            <column-instance column='[ROOT_CAUSE_CATEGORY]' derivation='None' name='[none:ROOT_CAUSE_CATEGORY:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_Total_Tickets]' derivation='User' name='[usr:Calculation_Total_Tickets:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[SUPPORT_CATEGORY]' derivation='None' name='[none:SUPPORT_CATEGORY:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_TOTAL_COST]' derivation='User' name='[usr:Calculation_TOTAL_COST:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -844,9 +987,6 @@
           <pane selection-relaxation-option='selection-relaxation-allow'>
             <view><breakdown value='auto' /></view>
             <mark class='Bar' />
-            <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:ROOT_CAUSE_CATEGORY:nk]' />
-            </encodings>
             <style>
               <style-rule element='mark'>
                 <format attr='mark-labels-show' value='true' />
@@ -855,29 +995,29 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_Total_Tickets:qk]</rows>
-        <cols>[federated.0A1B2C3D4E5F6789].[none:ROOT_CAUSE_CATEGORY:nk]</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_TOTAL_COST:qk]</rows>
+        <cols>[federated.1A2B3C4D].[none:SUPPORT_CATEGORY:nk]</cols>
       </table>
       <simple-id uuid='{AA00000B-0000-0000-0000-00000000000B}' />
     </worksheet>
 
-    <!-- SLA by Department Bar Chart -->
-    <worksheet name='SLA by Department'>
+    <!-- ── WORKSHEET 12: ROOT CAUSE ANALYSIS ─────────────────────────── -->
+    <worksheet name='Root Cause Analysis'>
       <layout-options>
-        <title><formatted-text><run fontsize='13'>SLA Compliance Rate by Department</run></formatted-text></title>
+        <title><formatted-text><run fontsize='13'>Root Cause Analysis</run></formatted-text></title>
       </layout-options>
       <table>
         <view>
           <datasources>
-            <datasource caption='Service_Reliability_Support_Data' name='federated.0A1B2C3D4E5F6789' />
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
           </datasources>
-          <datasource-dependencies datasource='federated.0A1B2C3D4E5F6789'>
-            <column caption='Department' datatype='string' name='[DEPARTMENT_RESPONSIBLE]' role='dimension' type='nominal' />
-            <column caption='SLA Compliance Rate' datatype='real' name='[Calculation_SLA_Rate]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='SUM(IF [SLA_MET] = TRUE THEN 1 ELSE 0 END) / COUNT([SUPPORT_ACTIVITY_ID])' />
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
+            <column caption='Root Cause Category' datatype='string' name='[ROOT_CAUSE_CATEGORY]' role='dimension' type='nominal' />
+            <column caption='Total Activities' datatype='integer' name='[Calculation_TOTAL_ACTIVITIES]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='COUNT([SUPPORT_ACTIVITY_ID])' />
             </column>
-            <column-instance column='[DEPARTMENT_RESPONSIBLE]' derivation='None' name='[none:DEPARTMENT_RESPONSIBLE:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_SLA_Rate]' derivation='User' name='[usr:Calculation_SLA_Rate:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[ROOT_CAUSE_CATEGORY]' derivation='None' name='[none:ROOT_CAUSE_CATEGORY:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_TOTAL_ACTIVITIES]' derivation='User' name='[usr:Calculation_TOTAL_ACTIVITIES:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
           <aggregation value='true' />
         </view>
@@ -887,7 +1027,7 @@
             <view><breakdown value='auto' /></view>
             <mark class='Bar' />
             <encodings>
-              <color column='[federated.0A1B2C3D4E5F6789].[none:DEPARTMENT_RESPONSIBLE:nk]' />
+              <color column='[federated.1A2B3C4D].[none:ROOT_CAUSE_CATEGORY:nk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -897,16 +1037,62 @@
             </style>
           </pane>
         </panes>
-        <rows>[federated.0A1B2C3D4E5F6789].[usr:Calculation_SLA_Rate:qk]</rows>
-        <cols>[federated.0A1B2C3D4E5F6789].[none:DEPARTMENT_RESPONSIBLE:nk]</cols>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_TOTAL_ACTIVITIES:qk]</rows>
+        <cols>[federated.1A2B3C4D].[none:ROOT_CAUSE_CATEGORY:nk]</cols>
       </table>
       <simple-id uuid='{AA00000C-0000-0000-0000-00000000000C}' />
     </worksheet>
 
+    <!-- ── WORKSHEET 13: SLA BY DEPARTMENT ────────────────────────────── -->
+    <worksheet name='SLA by Department'>
+      <layout-options>
+        <title><formatted-text><run fontsize='13'>SLA Compliance by Department</run></formatted-text></title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Service_Reliability_Support_DS' name='federated.1A2B3C4D' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1A2B3C4D'>
+            <column caption='Department Responsible' datatype='string' name='[DEPARTMENT_RESPONSIBLE]' role='dimension' type='nominal' />
+            <column caption='SLA Compliance Rate' datatype='real' name='[Calculation_SLA_COMPLIANCE_RATE]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='SUM(IF [SLA_MET] = TRUE THEN 1 ELSE 0 END) / COUNT([SUPPORT_ACTIVITY_ID])' />
+            </column>
+            <column-instance column='[DEPARTMENT_RESPONSIBLE]' derivation='None' name='[none:DEPARTMENT_RESPONSIBLE:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_SLA_COMPLIANCE_RATE]' derivation='User' name='[usr:Calculation_SLA_COMPLIANCE_RATE:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view><breakdown value='auto' /></view>
+            <mark class='Bar' />
+            <encodings>
+              <color column='[federated.1A2B3C4D].[none:DEPARTMENT_RESPONSIBLE:nk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.1A2B3C4D].[usr:Calculation_SLA_COMPLIANCE_RATE:qk]</rows>
+        <cols>[federated.1A2B3C4D].[none:DEPARTMENT_RESPONSIBLE:nk]</cols>
+      </table>
+      <simple-id uuid='{AA00000D-0000-0000-0000-00000000000D}' />
+    </worksheet>
+
   </worksheets>
 
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 5: DASHBOARDS                                             -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <dashboards>
 
+    <!-- DASHBOARD 1: SERVICE RELIABILITY & SUPPORT -->
     <dashboard _.fcp.AccessibleZoneTabOrder.true...enable-sort-zone-taborder='true'
                name='1. Service Reliability &amp; Support'>
       <style />
@@ -952,7 +1138,7 @@
       <simple-id uuid='{DD000001-0000-0000-0000-000000000001}' />
     </dashboard>
 
-    <!-- DASHBOARD 2 — Platform Usage & Adoption -->
+    <!-- DASHBOARD 2: PLATFORM USAGE & ADOPTION -->
     <dashboard _.fcp.AccessibleZoneTabOrder.true...enable-sort-zone-taborder='true'
                name='2. Platform Usage &amp; Adoption'>
       <style />
@@ -975,7 +1161,7 @@
               <zone h='41000' id='207' name='Users by Support Category' w='49200' x='800' y='56000'>
                 <zone-style><format attr='border-color' value='#cccccc' /><format attr='border-style' value='solid' /><format attr='border-width' value='1' /><format attr='margin' value='4' /></zone-style>
               </zone>
-              <zone h='41000' id='208' name='Root Cause Analysis' w='49200' x='50000' y='56000'>
+              <zone h='41000' id='208' name='First Response by Category' w='49200' x='50000' y='56000'>
                 <zone-style><format attr='border-color' value='#cccccc' /><format attr='border-style' value='solid' /><format attr='border-width' value='1' /><format attr='margin' value='4' /></zone-style>
               </zone>
             </zone>
@@ -986,7 +1172,7 @@
       <simple-id uuid='{DD000002-0000-0000-0000-000000000002}' />
     </dashboard>
 
-    <!-- DASHBOARD 3 — Customer Satisfaction & Efficiency -->
+    <!-- DASHBOARD 3: CUSTOMER SATISFACTION & EFFICIENCY -->
     <dashboard _.fcp.AccessibleZoneTabOrder.true...enable-sort-zone-taborder='true'
                name='3. Customer Satisfaction &amp; Efficiency'>
       <style />
@@ -1006,7 +1192,10 @@
               </zone>
             </zone>
             <zone h='41000' id='306' param='horz' type-v2='layout-flow' w='98400' x='800' y='56000'>
-              <zone h='41000' id='307' name='SLA by Department' w='98400' x='800' y='56000'>
+              <zone h='41000' id='307' name='Root Cause Analysis' w='49200' x='800' y='56000'>
+                <zone-style><format attr='border-color' value='#cccccc' /><format attr='border-style' value='solid' /><format attr='border-width' value='1' /><format attr='margin' value='4' /></zone-style>
+              </zone>
+              <zone h='41000' id='308' name='SLA by Department' w='49200' x='50000' y='56000'>
                 <zone-style><format attr='border-color' value='#cccccc' /><format attr='border-style' value='solid' /><format attr='border-width' value='1' /><format attr='margin' value='4' /></zone-style>
               </zone>
             </zone>
@@ -1019,9 +1208,12 @@
 
   </dashboards>
 
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 6: WINDOWS                                                -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <windows saved-dpi-scale-factor='1.5' source-height='44'>
 
-    <!-- Worksheet windows -->
+    <!-- ── Worksheet windows -->
     <window class='worksheet' name='Service KPIs'>
       <cards>
         <edge name='left'><strip size='160'><card type='pages' /><card type='filters' /><card type='marks' /></strip></edge>
@@ -1086,7 +1278,7 @@
       <simple-id uuid='{EE000008-0000-0000-0000-000000000008}' />
     </window>
 
-    <window class='worksheet' name='Satisfaction by Company'>
+    <window class='worksheet' name='First Response by Category'>
       <cards>
         <edge name='left'><strip size='160'><card type='pages' /><card type='filters' /><card type='marks' /></strip></edge>
         <edge name='top'><strip size='2147483647'><card type='columns' /></strip><strip size='2147483647'><card type='rows' /></strip><strip size='30'><card type='title' /></strip></edge>
@@ -1094,7 +1286,7 @@
       <simple-id uuid='{EE000009-0000-0000-0000-000000000009}' />
     </window>
 
-    <window class='worksheet' name='Cost to Resolve by Category'>
+    <window class='worksheet' name='Satisfaction by Company'>
       <cards>
         <edge name='left'><strip size='160'><card type='pages' /><card type='filters' /><card type='marks' /></strip></edge>
         <edge name='top'><strip size='2147483647'><card type='columns' /></strip><strip size='2147483647'><card type='rows' /></strip><strip size='30'><card type='title' /></strip></edge>
@@ -1102,7 +1294,7 @@
       <simple-id uuid='{EE00000A-0000-0000-0000-00000000000A}' />
     </window>
 
-    <window class='worksheet' name='Root Cause Analysis'>
+    <window class='worksheet' name='Cost to Resolve by Category'>
       <cards>
         <edge name='left'><strip size='160'><card type='pages' /><card type='filters' /><card type='marks' /></strip></edge>
         <edge name='top'><strip size='2147483647'><card type='columns' /></strip><strip size='2147483647'><card type='rows' /></strip><strip size='30'><card type='title' /></strip></edge>
@@ -1110,7 +1302,7 @@
       <simple-id uuid='{EE00000B-0000-0000-0000-00000000000B}' />
     </window>
 
-    <window class='worksheet' name='SLA by Department'>
+    <window class='worksheet' name='Root Cause Analysis'>
       <cards>
         <edge name='left'><strip size='160'><card type='pages' /><card type='filters' /><card type='marks' /></strip></edge>
         <edge name='top'><strip size='2147483647'><card type='columns' /></strip><strip size='2147483647'><card type='rows' /></strip><strip size='30'><card type='title' /></strip></edge>
@@ -1118,7 +1310,15 @@
       <simple-id uuid='{EE00000C-0000-0000-0000-00000000000C}' />
     </window>
 
-    <!-- Dashboard windows -->
+    <window class='worksheet' name='SLA by Department'>
+      <cards>
+        <edge name='left'><strip size='160'><card type='pages' /><card type='filters' /><card type='marks' /></strip></edge>
+        <edge name='top'><strip size='2147483647'><card type='columns' /></strip><strip size='2147483647'><card type='rows' /></strip><strip size='30'><card type='title' /></strip></edge>
+      </cards>
+      <simple-id uuid='{EE00000D-0000-0000-0000-00000000000D}' />
+    </window>
+
+    <!-- ── Dashboard windows -->
     <window class='dashboard' maximized='true' name='1. Service Reliability &amp; Support'>
       <viewpoints>
         <viewpoint name='Service KPIs'><zoom type='entire-view' /></viewpoint>
@@ -1137,7 +1337,7 @@
         <viewpoint name='Users by Region'><zoom type='entire-view' /></viewpoint>
         <viewpoint name='Users by Plan Type'><zoom type='entire-view' /></viewpoint>
         <viewpoint name='Users by Support Category'><zoom type='entire-view' /></viewpoint>
-        <viewpoint name='Root Cause Analysis'><zoom type='entire-view' /></viewpoint>
+        <viewpoint name='First Response by Category'><zoom type='entire-view' /></viewpoint>
       </viewpoints>
       <active id='-1' />
       <simple-id uuid='{FF000002-0000-0000-0000-000000000002}' />
@@ -1148,6 +1348,7 @@
         <viewpoint name='Service KPIs'><zoom type='entire-view' /></viewpoint>
         <viewpoint name='Satisfaction by Company'><zoom type='entire-view' /></viewpoint>
         <viewpoint name='Cost to Resolve by Category'><zoom type='entire-view' /></viewpoint>
+        <viewpoint name='Root Cause Analysis'><zoom type='entire-view' /></viewpoint>
         <viewpoint name='SLA by Department'><zoom type='entire-view' /></viewpoint>
       </viewpoints>
       <active id='-1' />
