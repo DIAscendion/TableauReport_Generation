@@ -1,264 +1,239 @@
 # DDL — Service_Reliability_Support_Data.xlsx
 
-## Overview
-
-| Sheet | Rows | Columns | Role |
-|---|---|---|---|
-| `FACT_SUPPORT_ACTIVITY` | 10 | 31 | Fact table |
-| `DIM_DATE` | 10 | 18 | Date dimension |
-| `DIM_SUPPORT_CATEGORY` | 6 | 16 | Category dimension |
-| `DIM_USER` | 7 | 21 | User dimension |
+> **Excel file:** `Service_Reliability_Support_Data.xlsx`
+> **TWB file:** `Service_Reliability_Support_Dashboard.twb`
+> **Datasource caption:** `Service_Reliability_Support_DS`
+> **Sheets:** 4 — `FACT_SUPPORT_ACTIVITY` · `DIM_DATE` · `DIM_SUPPORT_CATEGORY` · `DIM_USER`
 
 ---
 
-## Relationships (Join Keys)
+## Data Type Reference
 
-| Fact Column | Direction | Dimension Table | Dimension Column |
+| Excel Value | SQL Type |
+|---|---|
+| Text / string | `VARCHAR(255)` |
+| Whole number | `INTEGER` |
+| Decimal number | `FLOAT` |
+| Date string (YYYY-MM-DD) | `DATE` |
+| True / False | `BOOLEAN` |
+
+---
+
+## Tableau Relationship Map
+
+| Fact Column | Operator | Dimension Column | Dimension Table |
 |---|---|---|---|
-| `FACT_SUPPORT_ACTIVITY.DATE_KEY` | → | `DIM_DATE` | `DATE_KEY` |
-| `FACT_SUPPORT_ACTIVITY.USER_KEY` | → | `DIM_USER` | `USER_KEY` |
-| `FACT_SUPPORT_ACTIVITY.SUPPORT_CATEGORY_KEY` | → | `DIM_SUPPORT_CATEGORY` | `SUPPORT_CATEGORY_KEY` |
+| `DATE_KEY` | `=` | `DATE_KEY (DIM_DATE)` | `DIM_DATE` |
+| `SUPPORT_CATEGORY_KEY` | `=` | `SUPPORT_CATEGORY_KEY (DIM_SUPPORT_CATEGORY)` | `DIM_SUPPORT_CATEGORY` |
+| `USER_KEY` | `=` | `USER_KEY (DIM_USER)` | `DIM_USER` |
+
+> **Bridge column rule:** Every op string from the relationship expressions above must exist
+> as a **physical column** in **every sheet**. This includes both the plain FK side
+> (`DATE_KEY`, `SUPPORT_CATEGORY_KEY`, `USER_KEY`) and the qualified PK side
+> (`DATE_KEY (DIM_DATE)`, `SUPPORT_CATEGORY_KEY (DIM_SUPPORT_CATEGORY)`, `USER_KEY (DIM_USER)`).
 
 ---
 
 ## Sheet 1 — FACT_SUPPORT_ACTIVITY
-> 10 rows · 31 columns · Fact table
+
+> 50 rows · 34 columns (31 native + 3 bridge)
 
 ```sql
 CREATE TABLE FACT_SUPPORT_ACTIVITY (
-    SUPPORT_ACTIVITY_ID                           INTEGER,       -- PK
-    USER_KEY                                      VARCHAR(255),  -- FK → DIM_USER.USER_KEY
-    DATE_KEY                                      DATE,          -- FK → DIM_DATE.DATE_KEY
-    SUPPORT_CATEGORY_KEY                          VARCHAR(255),  -- FK → DIM_SUPPORT_CATEGORY.SUPPORT_CATEGORY_KEY
-    RESOLUTION_TIME_HOURS                         INTEGER,
-    CUSTOMER_SATISFACTION_SCORE                   INTEGER,
-    RESOLUTION_STATUS                             VARCHAR(255),
-    ACTIVE_WORK_TIME_HOURS                        INTEGER,
-    AGENT_INTERACTIONS_COUNT                      INTEGER,
-    COST_TO_RESOLVE                               INTEGER,
-    CUSTOMER_INTERACTIONS_COUNT                   INTEGER,
-    CUSTOMER_WAIT_TIME_HOURS                      INTEGER,
-    ESCALATION_COUNT                              INTEGER,
-    FIRST_CONTACT_RESOLUTION_FLAG                 BOOLEAN,
-    FIRST_RESPONSE_TIME_HOURS                     INTEGER,
-    FOLLOW_UP_REQUIRED                            BOOLEAN,
-    KNOWLEDGE_BASE_ARTICLES_USED                  INTEGER,
-    PREVENTABLE_ISSUE                             BOOLEAN,
-    PRIORITY_LEVEL                                VARCHAR(255),
-    REASSIGNMENT_COUNT                            INTEGER,
-    REOPENED_COUNT                                INTEGER,
-    RESOLUTION_METHOD                             VARCHAR(255),
-    ROOT_CAUSE_CATEGORY                           VARCHAR(255),
-    SLA_BREACH_HOURS                              INTEGER,
-    SLA_MET                                       BOOLEAN,
-    TICKET_CLOSE_DATE                             DATE,
-    TICKET_OPEN_DATE                              DATE,
-    TICKET_TYPE                                   VARCHAR(255),
-    LOAD_DATE                                     DATE,
-    UPDATE_DATE                                   DATE,
-    SOURCE_SYSTEM                                 VARCHAR(255)
+
+    -- Native Columns --
+    SUPPORT_ACTIVITY_ID                                INTEGER,        -- PK
+    USER_KEY                                           VARCHAR(255),   -- FK → DIM_USER (plain)
+    DATE_KEY                                           DATE,           -- FK → DIM_DATE (plain)
+    SUPPORT_CATEGORY_KEY                               VARCHAR(255),   -- FK → DIM_SUPPORT_CATEGORY (plain)
+    RESOLUTION_TIME_HOURS                              INTEGER,
+    CUSTOMER_SATISFACTION_SCORE                        INTEGER,
+    RESOLUTION_STATUS                                  VARCHAR(255),
+    ACTIVE_WORK_TIME_HOURS                             INTEGER,
+    AGENT_INTERACTIONS_COUNT                           INTEGER,
+    COST_TO_RESOLVE                                    INTEGER,
+    CUSTOMER_INTERACTIONS_COUNT                        INTEGER,
+    CUSTOMER_WAIT_TIME_HOURS                           INTEGER,
+    ESCALATION_COUNT                                   INTEGER,
+    FIRST_CONTACT_RESOLUTION_FLAG                      BOOLEAN,
+    FIRST_RESPONSE_TIME_HOURS                          INTEGER,
+    FOLLOW_UP_REQUIRED                                 BOOLEAN,
+    KNOWLEDGE_BASE_ARTICLES_USED                       INTEGER,
+    PREVENTABLE_ISSUE                                  BOOLEAN,
+    PRIORITY_LEVEL                                     VARCHAR(255),
+    REASSIGNMENT_COUNT                                 INTEGER,
+    REOPENED_COUNT                                     INTEGER,
+    RESOLUTION_METHOD                                  VARCHAR(255),
+    ROOT_CAUSE_CATEGORY                                VARCHAR(255),
+    SLA_BREACH_HOURS                                   INTEGER,
+    SLA_MET                                            BOOLEAN,
+    TICKET_CLOSE_DATE                                  DATE,
+    TICKET_OPEN_DATE                                   DATE,
+    TICKET_TYPE                                        VARCHAR(255),
+    LOAD_DATE                                          DATE,
+    UPDATE_DATE                                        DATE,
+    SOURCE_SYSTEM                                      VARCHAR(255),
+
+    -- Bridge Columns (Tableau multi-fact stitch) --
+    "DATE_KEY (DIM_DATE)"                              DATE,
+    "SUPPORT_CATEGORY_KEY (DIM_SUPPORT_CATEGORY)"      VARCHAR(255),
+    "USER_KEY (DIM_USER)"                              VARCHAR(255)
 );
 ```
-
-### Column Reference
-
-| Column | Type | Notes |
-|---|---|---|
-| SUPPORT_ACTIVITY_ID | INTEGER | Primary key |
-| USER_KEY | VARCHAR(255) | FK → DIM_USER |
-| DATE_KEY | DATE | FK → DIM_DATE |
-| SUPPORT_CATEGORY_KEY | VARCHAR(255) | FK → DIM_SUPPORT_CATEGORY |
-| RESOLUTION_TIME_HOURS | INTEGER | Hours taken to resolve ticket |
-| CUSTOMER_SATISFACTION_SCORE | INTEGER | Score 1–5 |
-| RESOLUTION_STATUS | VARCHAR(255) | e.g. Resolved, Open, Escalated |
-| ACTIVE_WORK_TIME_HOURS | INTEGER | Actual agent work hours |
-| AGENT_INTERACTIONS_COUNT | INTEGER | Number of agent touchpoints |
-| COST_TO_RESOLVE | INTEGER | Cost in currency units |
-| CUSTOMER_INTERACTIONS_COUNT | INTEGER | Number of customer touchpoints |
-| CUSTOMER_WAIT_TIME_HOURS | INTEGER | Total customer wait time |
-| ESCALATION_COUNT | INTEGER | Number of escalations |
-| FIRST_CONTACT_RESOLUTION_FLAG | BOOLEAN | TRUE if resolved on first contact |
-| FIRST_RESPONSE_TIME_HOURS | INTEGER | Hours to first response |
-| FOLLOW_UP_REQUIRED | BOOLEAN | TRUE if follow-up needed |
-| KNOWLEDGE_BASE_ARTICLES_USED | INTEGER | Articles referenced during resolution |
-| PREVENTABLE_ISSUE | BOOLEAN | TRUE if issue was preventable |
-| PRIORITY_LEVEL | VARCHAR(255) | Low / Medium / High / Critical |
-| REASSIGNMENT_COUNT | INTEGER | Number of agent reassignments |
-| REOPENED_COUNT | INTEGER | Number of times ticket reopened |
-| RESOLUTION_METHOD | VARCHAR(255) | e.g. Agent, Escalated, Self-Service |
-| ROOT_CAUSE_CATEGORY | VARCHAR(255) | e.g. Technical, User Error |
-| SLA_BREACH_HOURS | INTEGER | Hours beyond SLA target (0 if met) |
-| SLA_MET | BOOLEAN | TRUE if resolved within SLA |
-| TICKET_CLOSE_DATE | DATE | Date ticket was closed |
-| TICKET_OPEN_DATE | DATE | Date ticket was opened |
-| TICKET_TYPE | VARCHAR(255) | e.g. Incident, Problem, Request |
-| LOAD_DATE | DATE | ETL load date |
-| UPDATE_DATE | DATE | Last updated date |
-| SOURCE_SYSTEM | VARCHAR(255) | e.g. Zendesk |
 
 ---
 
 ## Sheet 2 — DIM_DATE
-> 10 rows · 18 columns · Date dimension
+
+> 50 rows · 23 columns (18 native + 5 bridge)
 
 ```sql
 CREATE TABLE DIM_DATE (
-    DATE_ID                                       INTEGER,       -- PK
-    DATE_KEY                                      DATE,          -- Join key → FACT.DATE_KEY
-    DATE_VALUE                                    DATE,
-    DAY_NAME                                      VARCHAR(255),
-    DAY_OF_MONTH                                  INTEGER,
-    DAY_OF_WEEK                                   INTEGER,
-    WEEK_OF_YEAR                                  INTEGER,
-    MONTH                                         INTEGER,
-    MONTH_NAME                                    VARCHAR(255),
-    QUARTER                                       INTEGER,
-    FISCAL_QUARTER                                INTEGER,
-    YEAR                                          INTEGER,
-    FISCAL_YEAR                                   INTEGER,
-    IS_HOLIDAY                                    BOOLEAN,
-    IS_WEEKEND                                    BOOLEAN,
-    LOAD_DATE                                     DATE,
-    UPDATE_DATE                                   DATE,
-    SOURCE_SYSTEM                                 VARCHAR(255)
+
+    -- Native Columns --
+    DATE_ID                                            INTEGER,        -- PK
+    DATE_KEY                                           DATE,           -- Join key (plain)
+    DATE_VALUE                                         DATE,
+    DAY_NAME                                           VARCHAR(255),
+    DAY_OF_MONTH                                       INTEGER,
+    DAY_OF_WEEK                                        INTEGER,
+    WEEK_OF_YEAR                                       INTEGER,
+    MONTH                                              INTEGER,
+    MONTH_NAME                                         VARCHAR(255),
+    QUARTER                                            INTEGER,
+    FISCAL_QUARTER                                     INTEGER,
+    YEAR                                               INTEGER,
+    FISCAL_YEAR                                        INTEGER,
+    IS_HOLIDAY                                         BOOLEAN,
+    IS_WEEKEND                                         BOOLEAN,
+    LOAD_DATE                                          DATE,
+    UPDATE_DATE                                        DATE,
+    SOURCE_SYSTEM                                      VARCHAR(255),
+
+    -- Bridge Columns (Tableau multi-fact stitch) --
+    "DATE_KEY (DIM_DATE)"                              DATE,           -- Qualified PK alias
+    SUPPORT_CATEGORY_KEY                               VARCHAR(255),
+    "SUPPORT_CATEGORY_KEY (DIM_SUPPORT_CATEGORY)"      VARCHAR(255),
+    USER_KEY                                           VARCHAR(255),
+    "USER_KEY (DIM_USER)"                              VARCHAR(255)
 );
 ```
-
-### Column Reference
-
-| Column | Type | Notes |
-|---|---|---|
-| DATE_ID | INTEGER | Primary key |
-| DATE_KEY | DATE | Join key to fact table |
-| DATE_VALUE | DATE | Full date value |
-| DAY_NAME | VARCHAR(255) | e.g. Monday, Friday |
-| DAY_OF_MONTH | INTEGER | 1–31 |
-| DAY_OF_WEEK | INTEGER | 1=Monday … 7=Sunday |
-| WEEK_OF_YEAR | INTEGER | 1–53 |
-| MONTH | INTEGER | 1–12 |
-| MONTH_NAME | VARCHAR(255) | e.g. January, February |
-| QUARTER | INTEGER | 1–4 |
-| FISCAL_QUARTER | INTEGER | 1–4 |
-| YEAR | INTEGER | e.g. 2024 |
-| FISCAL_YEAR | INTEGER | e.g. 2024 |
-| IS_HOLIDAY | BOOLEAN | TRUE if public holiday |
-| IS_WEEKEND | BOOLEAN | TRUE if Saturday or Sunday |
-| LOAD_DATE | DATE | ETL load date |
-| UPDATE_DATE | DATE | Last updated date |
-| SOURCE_SYSTEM | VARCHAR(255) | e.g. ETL |
 
 ---
 
 ## Sheet 3 — DIM_SUPPORT_CATEGORY
-> 6 rows · 16 columns · Category dimension
+
+> 6 rows · 21 columns (16 native + 5 bridge)
 
 ```sql
 CREATE TABLE DIM_SUPPORT_CATEGORY (
-    SUPPORT_CATEGORY_ID                           INTEGER,       -- PK
-    SUPPORT_CATEGORY_KEY                          VARCHAR(255),  -- Join key → FACT.SUPPORT_CATEGORY_KEY
-    SUPPORT_CATEGORY                              VARCHAR(255),
-    SUPPORT_SUBCATEGORY                           VARCHAR(255),
-    PRIORITY_LEVEL                                VARCHAR(255),
-    CUSTOMER_IMPACT_LEVEL                         VARCHAR(255),
-    DEPARTMENT_RESPONSIBLE                        VARCHAR(255),
-    EXPECTED_RESOLUTION_TIME_HOURS                INTEGER,
-    SLA_TARGET_HOURS                              INTEGER,
-    REQUIRES_ESCALATION                           BOOLEAN,
-    SELF_SERVICE_AVAILABLE                        BOOLEAN,
-    KNOWLEDGE_BASE_ARTICLES                       INTEGER,
-    COMMON_RESOLUTION_STEPS                       VARCHAR(255),
-    LOAD_DATE                                     DATE,
-    UPDATE_DATE                                   DATE,
-    SOURCE_SYSTEM                                 VARCHAR(255)
+
+    -- Native Columns --
+    SUPPORT_CATEGORY_ID                                INTEGER,        -- PK
+    SUPPORT_CATEGORY_KEY                               VARCHAR(255),   -- Join key (plain)
+    SUPPORT_CATEGORY                                   VARCHAR(255),
+    SUPPORT_SUBCATEGORY                                VARCHAR(255),
+    PRIORITY_LEVEL                                     VARCHAR(255),
+    CUSTOMER_IMPACT_LEVEL                              VARCHAR(255),
+    DEPARTMENT_RESPONSIBLE                             VARCHAR(255),
+    EXPECTED_RESOLUTION_TIME_HOURS                     INTEGER,
+    SLA_TARGET_HOURS                                   INTEGER,
+    REQUIRES_ESCALATION                                BOOLEAN,
+    SELF_SERVICE_AVAILABLE                             BOOLEAN,
+    KNOWLEDGE_BASE_ARTICLES                            INTEGER,
+    COMMON_RESOLUTION_STEPS                            VARCHAR(255),
+    LOAD_DATE                                          DATE,
+    UPDATE_DATE                                        DATE,
+    SOURCE_SYSTEM                                      VARCHAR(255),
+
+    -- Bridge Columns (Tableau multi-fact stitch) --
+    "SUPPORT_CATEGORY_KEY (DIM_SUPPORT_CATEGORY)"      VARCHAR(255),   -- Qualified PK alias
+    DATE_KEY                                           DATE,
+    "DATE_KEY (DIM_DATE)"                              DATE,
+    USER_KEY                                           VARCHAR(255),
+    "USER_KEY (DIM_USER)"                              VARCHAR(255)
 );
 ```
 
-### Column Reference
+#### DIM_SUPPORT_CATEGORY — Sample Values
 
-| Column | Type | Notes |
-|---|---|---|
-| SUPPORT_CATEGORY_ID | INTEGER | Primary key |
-| SUPPORT_CATEGORY_KEY | VARCHAR(255) | Join key to fact table |
-| SUPPORT_CATEGORY | VARCHAR(255) | e.g. Technical Issue, Connectivity |
-| SUPPORT_SUBCATEGORY | VARCHAR(255) | e.g. Software Bug, Network Outage |
-| PRIORITY_LEVEL | VARCHAR(255) | Low / Medium / High / Critical |
-| CUSTOMER_IMPACT_LEVEL | VARCHAR(255) | Low / Medium / High / Critical |
-| DEPARTMENT_RESPONSIBLE | VARCHAR(255) | e.g. Engineering, Infrastructure |
-| EXPECTED_RESOLUTION_TIME_HOURS | INTEGER | SLA expected resolution hours |
-| SLA_TARGET_HOURS | INTEGER | Hard SLA target in hours |
-| REQUIRES_ESCALATION | BOOLEAN | TRUE if category always requires escalation |
-| SELF_SERVICE_AVAILABLE | BOOLEAN | TRUE if customer can self-resolve |
-| KNOWLEDGE_BASE_ARTICLES | INTEGER | Count of KB articles for category |
-| COMMON_RESOLUTION_STEPS | VARCHAR(255) | Free text resolution steps |
-| LOAD_DATE | DATE | ETL load date |
-| UPDATE_DATE | DATE | Last updated date |
-| SOURCE_SYSTEM | VARCHAR(255) | e.g. ETL |
+| SUPPORT_CATEGORY_KEY | SUPPORT_CATEGORY | SUPPORT_SUBCATEGORY | DEPARTMENT_RESPONSIBLE | SLA_TARGET_HOURS |
+|---|---|---|---|---|
+| CAT001 | Technical Support | Software Issue | Engineering | 8 |
+| CAT002 | Technical Support | Hardware Issue | Engineering | 4 |
+| CAT003 | Billing & Accounts | Payment Dispute | Finance | 24 |
+| CAT004 | Account Management | Access & Permissions | IT | 16 |
+| CAT005 | General Inquiry | Product Question | Customer Success | 48 |
+| CAT006 | Network & Connectivity | VPN Issue | Network Ops | 6 |
 
 ---
 
 ## Sheet 4 — DIM_USER
-> 7 rows · 21 columns · User dimension
+
+> 50 rows · 26 columns (21 native + 5 bridge)
 
 ```sql
 CREATE TABLE DIM_USER (
-    USER_DIM_ID                                   INTEGER,       -- PK
-    USER_KEY                                      VARCHAR(255),  -- Join key → FACT.USER_KEY
-    USER_ID                                       VARCHAR(255),
-    USER_NAME                                     VARCHAR(255),
-    USER_ROLE                                     VARCHAR(255),
-    USER_STATUS                                   VARCHAR(255),
-    ACCOUNT_TYPE                                  VARCHAR(255),
-    COMPANY                                       VARCHAR(255),
-    EMAIL_DOMAIN                                  VARCHAR(255),
-    GEOGRAPHIC_REGION                             VARCHAR(255),
-    INDUSTRY_SECTOR                               VARCHAR(255),
-    LANGUAGE_PREFERENCE                           VARCHAR(255),
-    PLAN_CATEGORY                                 VARCHAR(255),
-    PLAN_TYPE                                     VARCHAR(255),
-    REGISTRATION_DATE                             DATE,
-    EFFECTIVE_START_DATE                          DATE,
-    EFFECTIVE_END_DATE                            DATE,
-    IS_CURRENT_RECORD                             BOOLEAN,
-    LOAD_DATE                                     DATE,
-    UPDATE_DATE                                   DATE,
-    SOURCE_SYSTEM                                 VARCHAR(255)
+
+    -- Native Columns --
+    USER_DIM_ID                                        INTEGER,        -- PK
+    USER_KEY                                           VARCHAR(255),   -- Join key (plain)
+    USER_ID                                            VARCHAR(255),
+    USER_NAME                                          VARCHAR(255),
+    USER_ROLE                                          VARCHAR(255),
+    USER_STATUS                                        VARCHAR(255),
+    ACCOUNT_TYPE                                       VARCHAR(255),
+    COMPANY                                            VARCHAR(255),
+    EMAIL_DOMAIN                                       VARCHAR(255),
+    GEOGRAPHIC_REGION                                  VARCHAR(255),
+    INDUSTRY_SECTOR                                    VARCHAR(255),
+    LANGUAGE_PREFERENCE                                VARCHAR(255),
+    PLAN_CATEGORY                                      VARCHAR(255),
+    PLAN_TYPE                                          VARCHAR(255),
+    REGISTRATION_DATE                                  DATE,
+    EFFECTIVE_START_DATE                               DATE,
+    EFFECTIVE_END_DATE                                 DATE,
+    IS_CURRENT_RECORD                                  BOOLEAN,
+    LOAD_DATE                                          DATE,
+    UPDATE_DATE                                        DATE,
+    SOURCE_SYSTEM                                      VARCHAR(255),
+
+    -- Bridge Columns (Tableau multi-fact stitch) --
+    "USER_KEY (DIM_USER)"                              VARCHAR(255),   -- Qualified PK alias
+    DATE_KEY                                           DATE,
+    "DATE_KEY (DIM_DATE)"                              DATE,
+    SUPPORT_CATEGORY_KEY                               VARCHAR(255),
+    "SUPPORT_CATEGORY_KEY (DIM_SUPPORT_CATEGORY)"      VARCHAR(255)
 );
 ```
 
-### Column Reference
+---
 
-| Column | Type | Notes |
+## Bridge Column Summary (All Sheets)
+
+| Bridge Column | Type | Present In |
 |---|---|---|
-| USER_DIM_ID | INTEGER | Primary key |
-| USER_KEY | VARCHAR(255) | Join key to fact table |
-| USER_ID | VARCHAR(255) | Business user ID e.g. U001 |
-| USER_NAME | VARCHAR(255) | Full name |
-| USER_ROLE | VARCHAR(255) | e.g. Admin, User, Manager |
-| USER_STATUS | VARCHAR(255) | e.g. Active, Inactive |
-| ACCOUNT_TYPE | VARCHAR(255) | e.g. Enterprise, Professional |
-| COMPANY | VARCHAR(255) | Company name |
-| EMAIL_DOMAIN | VARCHAR(255) | e.g. acme.com |
-| GEOGRAPHIC_REGION | VARCHAR(255) | e.g. North America, Europe |
-| INDUSTRY_SECTOR | VARCHAR(255) | e.g. Technology, Finance |
-| LANGUAGE_PREFERENCE | VARCHAR(255) | e.g. English, Spanish |
-| PLAN_CATEGORY | VARCHAR(255) | e.g. Premium, Standard |
-| PLAN_TYPE | VARCHAR(255) | e.g. Annual, Monthly |
-| REGISTRATION_DATE | DATE | Date user registered |
-| EFFECTIVE_START_DATE | DATE | SCD2 effective start |
-| EFFECTIVE_END_DATE | DATE | SCD2 effective end (9999-12-31 = current) |
-| IS_CURRENT_RECORD | BOOLEAN | TRUE if active SCD2 record |
-| LOAD_DATE | DATE | ETL load date |
-| UPDATE_DATE | DATE | Last updated date |
-| SOURCE_SYSTEM | VARCHAR(255) | e.g. CRM |
+| `DATE_KEY` | `DATE` | All 4 sheets |
+| `DATE_KEY (DIM_DATE)` | `DATE` | All 4 sheets |
+| `SUPPORT_CATEGORY_KEY` | `VARCHAR(255)` | All 4 sheets |
+| `SUPPORT_CATEGORY_KEY (DIM_SUPPORT_CATEGORY)` | `VARCHAR(255)` | All 4 sheets |
+| `USER_KEY` | `VARCHAR(255)` | All 4 sheets |
+| `USER_KEY (DIM_USER)` | `VARCHAR(255)` | All 4 sheets |
+
+> **Why quoted column names?** Column names containing spaces and parentheses
+> (e.g. `DATE_KEY (DIM_DATE)`) must be wrapped in double quotes in standard SQL.
+> In Excel these appear as regular column headers with spaces and parentheses as-is.
 
 ---
 
-## Data Type Mapping (Excel → Tableau TWB)
+## Calculated Fields (defined in TWB — no Excel column needed)
 
-| DDL Type | Tableau `local-type` | Tableau `remote-type` |
+| Caption | Internal Name | Type |
 |---|---|---|
-| VARCHAR(255) | `string` | `129` |
-| INTEGER | `integer` | `131` |
-| FLOAT | `real` | `5` |
-| DATE | `date` | `7` |
-| BOOLEAN | `boolean` | `11` |
+| Total Tickets | `Calculation_TOTAL_TICKETS` | INTEGER |
+| Average Resolution Time | `Calculation_AVG_RESOLUTION_TIME` | FLOAT |
+| SLA Compliance Rate | `Calculation_SLA_RATE` | FLOAT |
+| First Contact Resolution Rate | `Calculation_FCR_RATE` | FLOAT |
+| Average Customer Satisfaction | `Calculation_AVG_SATISFACTION` | FLOAT |
+| Average First Response Time | `Calculation_AVG_FIRST_RESPONSE` | FLOAT |
+| Total Cost to Resolve | `Calculation_TOTAL_COST` | INTEGER |
